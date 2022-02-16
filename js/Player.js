@@ -4,6 +4,10 @@ class Player {
     this.index = null;
     this.positionX = 0;
     this.positionY = 0;
+    this.rank = 0;
+    this.score = 0;
+
+
   }
 
    addPlayer() {
@@ -19,6 +23,8 @@ class Player {
       name: this.name,
       positionX: this.positionX,
       positionY: this.positionY,
+      rank: this.rank,
+      score: this.score,
     });
   }
   //TA
@@ -45,10 +51,10 @@ class Player {
       playerCount: count
     });
   }
-
   resetPlayers(count) {
     database.ref("/").update({
-      players: 0
+      players: 0,
+      carsAtEnd: 0
     });
   }
   //SA
@@ -58,6 +64,8 @@ class Player {
       name: this.name,
       positionX: this.positionX,
       positionY: this.positionY,
+      rank: this.rank,
+      score: this.score
      });
   }
 
@@ -68,4 +76,18 @@ class Player {
       allPlayers = data.val();
     });
   }
+  
+  //C40 //TA
+  getanimalsAtEnd(){
+    database.ref('carsAtEnd').on("value",(data)=>{
+      this.rank = data.val()
+    })
+  }
+
+ static updateanimalsAtEnd(rank) {
+   database.ref("/").update({
+     carsAtEnd: rank
+   });
+ }
+
 } 
